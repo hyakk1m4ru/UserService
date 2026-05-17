@@ -1,0 +1,45 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.settings/
+.project
+.classpath
+.vscode/
+.mvn/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.*
+application-local.yml
+application-local.properties
+
+# Database
+*.db
+*.sqlite
+*.h2.db
+
+# Docker
+docker-postgres-data/
+docker-redis-data/
+
+# Temp
+*.tmp
+*.temp
+*.cache
+*.swp
+*~
