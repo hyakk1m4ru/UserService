@@ -2,6 +2,7 @@ package com.innowise.mapper;
 
 import com.innowise.model.PaymentCard;
 import com.innowise.dto.PaymentCardDTO;
+import com.innowise.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -23,6 +24,7 @@ public interface PaymentCardMapper {
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "active", ignore = true)
     void updateEntityFromDto(PaymentCardDTO cardDTO, @MappingTarget PaymentCard card);
 
     @Named("userIdToUser")

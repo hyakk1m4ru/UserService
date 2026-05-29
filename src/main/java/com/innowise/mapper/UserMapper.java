@@ -1,5 +1,7 @@
 package com.innowise.mapper;
 
+import com.innowise.dto.UserDTO;
+import com.innowise.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
