@@ -29,13 +29,6 @@ public class UserController {
         UserDTO createdUser = userService.createUser(userDTO);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
-
-    @GetMapping
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
-        UserDTO user = userService.getUserById(id);
-        return ResponseEntity.ok(user);
-    }
-
     @GetMapping
     public ResponseEntity<PageResponse<UserDTO>> getAllUsers(
             @RequestParam(required = false) String name,
@@ -49,6 +42,11 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
+        UserDTO user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO){
@@ -57,13 +55,13 @@ public class UserController {
     }
     @PatchMapping("/{id}/activate")
     public ResponseEntity<UserDTO> activateUser(@PathVariable Long id){
-        userService.activateUser(id);
-        return ResponseEntity.noContent().build();
+        UserDTO userDTO = userService.activateUser(id);
+        return ResponseEntity.ok(userDTO);
     }
     @PatchMapping("/{id}/deactivate")
     public ResponseEntity<UserDTO> deactivateUser(@PathVariable Long id){
-        userService.deactivateUser(id);
-        return ResponseEntity.noContent().build();
+        UserDTO userDTO = userService.deactivateUser(id);
+        return ResponseEntity.ok(userDTO);
     }
 
     @DeleteMapping("/{id}")
