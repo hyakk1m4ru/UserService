@@ -43,7 +43,7 @@ public class UserService {
         return userMapper.toDto(savedUser);
     }
 
-    @Cacheable(value = "user", key = "#id")
+    @Cacheable(value = "user", key = "#id", unless = "#result == null")
     public UserDTO getUserById(Long id){
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", id));
         return userMapper.toDto(user);
