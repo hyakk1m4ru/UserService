@@ -66,7 +66,7 @@ public class PaymentCardService {
         return new PageResponse<>(cardDTOS, cardPage.getNumber(), cardPage.getSize(), cardPage.getTotalElements());
     }
 
-    @Cacheable(value = "card", key = "#userId")
+    @Cacheable(value = "userCards", key = "#userId")
     public List<PaymentCardDTO> getCardsByUserId(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", userId));
         return paymentCardRepository.findByUser(user).stream().map(paymentCardMapper::toDto).toList();
@@ -95,7 +95,7 @@ public class PaymentCardService {
     }
 
     @Transactional
-    @CachePut(value = "card", key = "#result.userId")
+    @CachePut(value = "card", key = "#id")
     @CacheEvict(value = "userCards", key = "#result.userId")
     public PaymentCardDTO deactivateCard(Long id) {
         return updateCardActiveStatus(id, false);
