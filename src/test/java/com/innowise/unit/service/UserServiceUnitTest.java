@@ -1,4 +1,4 @@
-package com.innowise.integration.service;
+package com.innowise.unit.service;
 
 import com.innowise.dto.UserDTO;
 import com.innowise.exception.BusinessException;
