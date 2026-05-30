@@ -15,17 +15,37 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-        jdbc:
-          batch_size: 20
     show-sql: true
     open-in-view: false
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
 
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     enabled: true
+    drop-first: true
 
 server:
   port: ${SERVER_PORT:8081}
+
+spring.cache:
+  type: redis
+  redis:
+    time-to-live: 600000  \
+    cache-null-values: false
+    key-prefix: "userservice:"
+    use-key-prefix: true
 
 logging:
   level:
