@@ -1,7 +1,7 @@
 package com.innowise.mapper;
 
-import com.innowise.model.PaymentCard;
 import com.innowise.dto.PaymentCardDTO;
+import com.innowise.model.PaymentCard;
 import com.innowise.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

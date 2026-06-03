@@ -78,15 +78,13 @@ class UserControllerIntegrationTest {
 
 
     @Test
-    void createUser_ReturnsCreatedUser() throws Exception {
-        // Given
+    void createUserReturnsCreatedUser() throws Exception {
         UserDTO userDTO = new UserDTO();
         userDTO.setName("John");
         userDTO.setSurname("Doe");
         userDTO.setBirthDate(LocalDate.of(1990, 1, 1));
         userDTO.setEmail("john@example.com");
 
-        // When & Then
         MvcResult result = mockMvc.perform(post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userDTO)))
@@ -101,11 +99,9 @@ class UserControllerIntegrationTest {
     }
 
     @Test
-    void getUserById_ReturnsUser() throws Exception {
-        // Given
+    void getUserByIdReturnsUser() throws Exception {
         UserDTO createdUser = createTestUser();
 
-        // When & Then
         mockMvc.perform(get("/api/users/{id}", createdUser.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(createdUser.getId()))
@@ -114,12 +110,10 @@ class UserControllerIntegrationTest {
     }
 
     @Test
-    void getAllUsers_ReturnsPageOfUsers() throws Exception {
-        // Given
+    void getAllUsersReturnsPageOfUsers() throws Exception {
         createTestUser();
         createTestUser2();
 
-        // When & Then
         mockMvc.perform(get("/api/users")
                         .param("page", "0")
                         .param("size", "10"))
@@ -131,12 +125,10 @@ class UserControllerIntegrationTest {
     }
 
     @Test
-    void getAllUsers_WithFilters_ReturnsFilteredUsers() throws Exception {
-        // Given
+    void getAllUsersWithFiltersReturnsFilteredUsers() throws Exception {
         createTestUser();
         createTestUser2();
 
-        // When & Then - фильтр по имени
         mockMvc.perform(get("/api/users")
                         .param("name", "John")
                         .param("page", "0")
@@ -147,8 +139,7 @@ class UserControllerIntegrationTest {
     }
 
     @Test
-    void updateUser_ReturnsUpdatedUser() throws Exception {
-        // Given
+    void updateUserReturnsUpdatedUser() throws Exception {
         UserDTO createdUser = createTestUser();
 
         UserDTO updateDTO = new UserDTO();
@@ -157,7 +148,6 @@ class UserControllerIntegrationTest {
         updateDTO.setBirthDate(LocalDate.of(1990, 1, 1));
         updateDTO.setEmail("johnny@example.com");
 
-        // When & Then
         mockMvc.perform(put("/api/users/{id}", createdUser.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateDTO)))
@@ -165,7 +155,6 @@ class UserControllerIntegrationTest {
                 .andExpect(jsonPath("$.name").value("Johnny"))
                 .andExpect(jsonPath("$.email").value("johnny@example.com"));
 
-        // Verify
         mockMvc.perform(get("/api/users/{id}", createdUser.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Johnny"))
@@ -173,8 +162,7 @@ class UserControllerIntegrationTest {
     }
 
     @Test
-    void updateUser_WithDuplicateEmail_ReturnsBadRequest() throws Exception {
-        // Given
+    void updateUserWithDuplicateEmailReturnsBadRequest() throws Exception {
         UserDTO user1 = createTestUser();
         UserDTO user2 = new UserDTO();
         user2.setName("Jane");
@@ -190,14 +178,12 @@ class UserControllerIntegrationTest {
 
         UserDTO createdUser2 = objectMapper.readValue(result.getResponse().getContentAsString(), UserDTO.class);
 
-        // Try to update user2 with user1's email
         UserDTO updateDTO = new UserDTO();
         updateDTO.setName("Jane");
         updateDTO.setSurname("Smith");
         updateDTO.setBirthDate(LocalDate.of(1995, 5, 5));
-        updateDTO.setEmail("john@example.com"); // duplicate email
+        updateDTO.setEmail("john@example.com");
 
-        // When & Then
         mockMvc.perform(put("/api/users/{id}", createdUser2.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateDTO)))
@@ -205,59 +191,49 @@ class UserControllerIntegrationTest {
     }
 
     @Test
-    void deleteUser_ReturnsNoContent() throws Exception {
-        // Given
+    void deleteUserReturnsNoContent() throws Exception {
         UserDTO createdUser = createTestUser();
 
-        // When
         mockMvc.perform(delete("/api/users/{id}", createdUser.getId()))
                 .andExpect(status().isNoContent());
 
-        // Then
         mockMvc.perform(get("/api/users/{id}", createdUser.getId()))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void activateUser_UpdatesStatus() throws Exception {
-        // Given
+    void activateUserUpdatesStatus() throws Exception {
         UserDTO createdUser = createTestUser();
 
-        // First deactivate
         mockMvc.perform(patch("/api/users/{id}/deactivate", createdUser.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.active").value(false));
 
-        // When - activate
         mockMvc.perform(patch("/api/users/{id}/activate", createdUser.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.active").value(true));
 
-        // Verify
         mockMvc.perform(get("/api/users/{id}", createdUser.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.active").value(true));
     }
 
     @Test
-    void deactivateUser_UpdatesStatus() throws Exception {
-        // Given
+    void deactivateUserUpdatesStatus() throws Exception {
         UserDTO createdUser = createTestUser();
         assertThat(createdUser.getActive()).isTrue();
 
-        // When
         mockMvc.perform(patch("/api/users/{id}/deactivate", createdUser.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.active").value(false));
 
-        // Verify
         mockMvc.perform(get("/api/users/{id}", createdUser.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.active").value(false));
     }
 
     @Test
-    void getUserById_WithNonExistentId_ReturnsNotFound() throws Exception {
+    void getUserByIdWithNonExistentIdReturnsNotFound() throws Exception {
         mockMvc.perform(get("/api/users/{id}", 99999L))
                 .andExpect(status().isNotFound());
     }

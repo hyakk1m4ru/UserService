@@ -2,8 +2,6 @@ package com.innowise.controller;
 
 import com.innowise.dto.PageResponse;
 import com.innowise.dto.PaymentCardDTO;
-import com.innowise.mapper.PaymentCardMapper;
-import com.innowise.model.PaymentCard;
 import com.innowise.service.PaymentCardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;

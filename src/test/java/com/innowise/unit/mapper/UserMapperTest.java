@@ -1,8 +1,8 @@
 package com.innowise.unit.mapper;
 
 import com.innowise.dto.UserDTO;
-import com.innowise.model.User;
 import com.innowise.mapper.UserMapper;
+import com.innowise.model.User;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 

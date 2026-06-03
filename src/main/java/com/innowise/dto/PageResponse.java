@@ -2,6 +2,7 @@ package com.innowise.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
 import java.util.List;
 
 @Data
