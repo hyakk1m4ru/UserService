@@ -1,0 +1,4 @@
+to run application ./start in powershell
+to stop running and delete containers ./stop
+./check if you want to see containers status, new db user status, users permissions and application status
+./clean to delete every container, image and volume
