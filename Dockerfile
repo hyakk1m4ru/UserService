@@ -1,11 +1,11 @@
-FROM gradle:8.8-jdk17 AS build
+FROM gradle:8.8-jdk21 AS build
 WORKDIR /home/gradle/project
 COPY build.gradle settings.gradle ./
 COPY gradle gradle
 COPY src src
 RUN gradle bootJar --no-daemon -x test
 
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 RUN groupadd --system spring && useradd --system --gid spring spring
