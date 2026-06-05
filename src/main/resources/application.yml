@@ -15,7 +15,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+        jdbc:
+          batch_size: 20
     show-sql: true
+    open-in-view: false
 
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
@@ -26,5 +29,6 @@ server:
 
 logging:
   level:
-    com.example.userservice: DEBUG
     org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    com.innowise.repository: DEBUG
